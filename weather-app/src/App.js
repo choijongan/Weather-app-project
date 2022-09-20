@@ -38,7 +38,7 @@ function App() {
     setWeather(data);
   }
   //이 개념이 이번 강의에서 제일 어려웠던 개념. useEffect를 하나로 합치고
-  //if문을 줘서 누르지 않는다면 current를 버튼을 누르면 city데이터를 가져옴.
+  //if문을 줘서 누르지 않는다면 current를 버튼을 누르면 city데이터를 가져옴..
   useEffect(()=>{
     if(city == ""){
       getCurrentLocation();  
