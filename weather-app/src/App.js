@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WeatherBox from './component/WeatherBox';
 import WeatherButton from './component/WeatherButton';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 //1. 앱이 실행되자마자 현재위치기반의 날씨가 보인다.
@@ -14,6 +15,7 @@ import WeatherButton from './component/WeatherButton';
 function App() {
   const [weather,setWeather]= useState(null);
   const [city,setCity]= useState('');
+  const [loading, setLoading]= useState(false);
   const cities = ["Busan", "New york", "tokyo", "seoul"]
   const getCurrentLocation=()=>{
     navigator.geolocation.getCurrentPosition((position)=>{
@@ -25,17 +27,20 @@ function App() {
 
   const getWeatherByCurrentLocation = async(lat, lon) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7b3ce9c967ff0e9fe57fbdf8463c6ee9&units=metric`;
-    
+    setLoading(true)
     let response = await fetch(url);
     let data = await response.json();
     setWeather(data);
+    setLoading(false);
   };
 
   const getWeatherByCity=async()=>{
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7b3ce9c967ff0e9fe57fbdf8463c6ee9&units=metric`
+    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
     setWeather(data);
+    setLoading(false);
   }
   //이 개념이 이번 강의에서 제일 어려웠던 개념. useEffect를 하나로 합치고
   //if문을 줘서 누르지 않는다면 current를 버튼을 누르면 city데이터를 가져옴..
@@ -54,6 +59,7 @@ function App() {
   return (
     <div>
      <div class="container">
+     <ClipLoader color="#f88c6b" loading={loading} size={150} />
        <WeatherBox weather={weather}/>
        <WeatherButton cities={cities} setCity={setCity}/>
         </div>
