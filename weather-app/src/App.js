@@ -14,9 +14,18 @@ import ClipLoader from "react-spinners/ClipLoader";
 //6. 데이터를 들고온느 동안 로딩 스피너가 돈다
 function App() {
   const [weather,setWeather]= useState(null);
-  const [city,setCity]= useState('');
+  const [city,setCity]= useState("");
   const [loading, setLoading]= useState(false);
   const cities = ["Busan", "New york", "tokyo", "seoul"]
+  
+  const handleCityChange = (city) => {
+    if (city === "current") {
+      setCity(null);
+    } else {
+      setCity(city);
+    }
+  };
+
   const getCurrentLocation=()=>{
     navigator.geolocation.getCurrentPosition((position)=>{
       let lat = position.coords.latitude;
@@ -58,11 +67,16 @@ function App() {
 
   return (
     <div>
+      {loading? (
+        <div class="container">
+      <ClipLoader color="#f88c6b" loading={loading} size={150} />
+      </div>
+      ) : (
      <div class="container">
-     <ClipLoader color="#f88c6b" loading={loading} size={150} />
        <WeatherBox weather={weather}/>
-       <WeatherButton cities={cities} setCity={setCity}/>
+       <WeatherButton  cities={cities} setCity={setCity} handleCityChange={handleCityChange}/>
         </div>
+        )}
     </div>
   );
 }
