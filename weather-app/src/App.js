@@ -18,14 +18,6 @@ function App() {
   const [loading, setLoading]= useState(false);
   const cities = ["Busan", "New york", "tokyo", "seoul"]
   
-  const handleCityChange = (city) => {
-    if (city === "current") {
-      setCity(null);
-    } else {
-      setCity(city);
-    }
-  };
-
   const getCurrentLocation=()=>{
     navigator.geolocation.getCurrentPosition((position)=>{
       let lat = position.coords.latitude;
@@ -74,7 +66,7 @@ function App() {
       ) : (
      <div class="container">
        <WeatherBox weather={weather}/>
-       <WeatherButton  cities={cities} setCity={setCity} handleCityChange={handleCityChange}/>
+       <WeatherButton cities={cities} setCity={setCity}/>
         </div>
         )}
     </div>
